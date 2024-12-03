@@ -5,7 +5,7 @@ import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import Providers from "./providers";
 import { getServerSession } from "next-auth";
-import { authOptions } from "./api/auth/[...nextauth]/route";
+import { authOptions } from "@/auth";
 
 const geistMono = localFont({
   src: "./fonts/GeistMonoVF.woff",

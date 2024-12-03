@@ -29,7 +29,7 @@ moment.locale('ru')
 export const DiaryComponent = () => {
   const [diary, setDiary] = useState<any>(null);
   const [isLoading, setLoading] = useState(true);
-  const [date, setDate] = useState<Date>(moment().startOf('isoweek').toDate());
+  const [date, setDate] = useState<Date>(moment().startOf('isoWeek').toDate());
   const [showTopics, setShowTopics] = useState(false);
 
   useEffect(() => {

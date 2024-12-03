@@ -44,7 +44,7 @@ export const Navbar = () => {
 							<NavigationMenuTrigger>Навигация</NavigationMenuTrigger>
 							<NavigationMenuContent>
 								{links.map((el) => (
-									<NavigationMenuLink asChild>
+									<NavigationMenuLink asChild key={el.link}>
 										<a
 											href={el.link}
 											className={buttonVariants({variant: 'ghost'}) + ' w-full'}

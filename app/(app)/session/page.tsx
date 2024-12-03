@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { getServerSession } from "next-auth";
 import { ClientSession } from './client';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { authOptions } from "@/auth"
 
 export const metadata = {
   title: 'SessionPage',

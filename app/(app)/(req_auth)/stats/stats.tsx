@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/card"
 import { getStats } from '@/data/stats';
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route"
+import { authOptions } from "@/auth"
 import { PositionNum } from '@/components/position-number';
 import { Mark } from '@/components/mark';
 import moment from 'moment';

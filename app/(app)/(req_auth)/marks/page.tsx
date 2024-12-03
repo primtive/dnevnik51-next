@@ -8,7 +8,7 @@ export const metadata = {
 export default async function Marks() {
   const now: Date = new Date();
   const start: Date = new Date(now.getFullYear(), 0, 0);
-  var day = Math.floor((now - start) / (1000 * 60 * 60 * 24));
+  var day = Math.floor((now.valueOf() - start.valueOf()) / (1000 * 60 * 60 * 24));
 
   var initPeriod = '';
   var grade = 10;

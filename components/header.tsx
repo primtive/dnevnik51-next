@@ -18,7 +18,7 @@ import Link from 'next/link';
 import { Signout } from './signout';
 import { User } from 'lucide-react';
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route"
+import { authOptions } from "@/auth"
 
 
 export async function Header() {
