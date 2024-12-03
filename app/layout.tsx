@@ -36,7 +36,7 @@ export default async function RootLayout({
     <body className={geistMono.className + ' flex flex-col h-screen justify-between'}>
       <Providers session={session}>
         <Header />
-        <div className=" mx-5 mt-5 lg:mx-20 mb-auto">
+        <div className=" mx-1 mt-5 md:mx-5 lg:mx-20 mb-auto">
           {children}
         </div>
         <Footer />

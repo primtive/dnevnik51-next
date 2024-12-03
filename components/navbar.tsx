@@ -41,13 +41,15 @@ export const Navbar = () => {
 					<NavigationMenuList>
 
 						<NavigationMenuItem>
-							<NavigationMenuTrigger>Навигация</NavigationMenuTrigger>
+							<NavigationMenuTrigger>
+								Меню
+							</NavigationMenuTrigger>
 							<NavigationMenuContent>
 								{links.map((el) => (
 									<NavigationMenuLink asChild key={el.link}>
 										<a
 											href={el.link}
-											className={buttonVariants({variant: 'ghost'}) + ' w-full'}
+											className={buttonVariants({ variant: 'ghost' }) + ' w-full'}
 										>
 											<div className="text-sm font-medium leading-none">{el.name}</div>
 										</a>

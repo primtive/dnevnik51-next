@@ -33,7 +33,6 @@ export async function Header() {
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="relative h-10 w-10 rounded-full">
                 <Avatar className="">
-                  <AvatarImage src="" />
                   <AvatarFallback>{session ? session.user?.inits : <User />}</AvatarFallback>
                 </Avatar>
               </Button>
@@ -43,7 +42,7 @@ export async function Header() {
                 {session ?
                   <div className='flex'>
                     <div className="flex flex-col space-y-1">
-                      <p className="text-sm font-medium leading-none">{session.user?.name?.split(' ').slice(0,2).join(' ')}</p>
+                      <p className="text-sm font-medium leading-none">{session.user?.name?.split(' ').slice(0, 2).join(' ')}</p>
                       <p className="text-xs leading-none text-muted-foreground overflow-hidden max-w-[170px] text-ellipsis">
                         {session.user?.email}
                       </p>

@@ -22,6 +22,7 @@
 
 # misc
 /config/config.js
+nginx.conf
 .DS_Store
 *.pem
 

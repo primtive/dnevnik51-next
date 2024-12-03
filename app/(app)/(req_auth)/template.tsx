@@ -21,7 +21,7 @@ const paragraphs = [
 
 export default async function Template({ children }: { children: React.ReactNode }) {
   const session = await getServerSession(authOptions)
-  if (!session) return <div className="flex h-fit w-full items-center justify-center px-4">
+  if (!session) return <div className="flex h-fit w-full items-center justify-center">
     <Card className="w-fit max-w-[600px]">
       <CardHeader>
         <CardTitle><p className="text-2xl font-semibold">Добро пожаловать на dnevnik51.ru!</p></CardTitle>
