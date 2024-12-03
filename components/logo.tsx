@@ -10,7 +10,7 @@ const logoFont = localFont({
 
 export const Logo = () => {
   return (
-    <div id="logo" className={`w-min mr-5 `+logoFont.className}>
+    <div id="logo" className={`w-min `+logoFont.className}>
       <Link href="/">
         <h1 className='text-3xl'>dnevnik51.ru</h1>
       </Link>
