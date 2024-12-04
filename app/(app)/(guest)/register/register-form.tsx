@@ -37,6 +37,7 @@ import { signIn } from "next-auth/react";
 import * as React from "react"
 import { useRouter } from 'next/navigation'
 import { PasswordInput } from "@/components/password-input"
+import { useSession } from "next-auth/react"
 
 function parseError(error: string) {
   try {
@@ -61,8 +62,10 @@ const formSchema = z.object({
 })
 
 export default function RegisterForm({ gradeNames }: { gradeNames: any }) {
-  const [loading, setLoading] = React.useState(false);
+  const { data: session, status } = useSession()
   const router = useRouter()
+  if (status == 'authenticated') return router.push('/')
+  const [loading, setLoading] = React.useState(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   })

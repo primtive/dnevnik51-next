@@ -37,8 +37,9 @@ import { Input } from "@/components/ui/input"
 import Link from "next/link"
 import { signIn } from "next-auth/react";
 import * as React from "react"
-import { useRouter } from 'next/navigation'
+import { redirect, useRouter } from 'next/navigation'
 import { PasswordInput } from "@/components/password-input"
+import { useSession } from "next-auth/react"
 
 const formSchema = z.object({
   email: z
@@ -52,11 +53,14 @@ const formSchema = z.object({
 })
 
 export default function LoginForm() {
+  const { data: session, status } = useSession()
+  const router = useRouter()
+  if (status == 'authenticated') return router.push('/')
   const { toast } = useToast()
   const [loading, setLoading] = React.useState(false);
   const [resetLoading, setResetLoading] = React.useState(false);
   const [email, setEmail] = React.useState('');
-  const router = useRouter()
+  
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   })
@@ -138,6 +142,13 @@ export default function LoginForm() {
                         </DialogTrigger>
                         <DialogContent className="sm:max-w-md">
                           <DialogHeader>
+                            <DialogTitle>Функция пока не работает</DialogTitle>
+                            <DialogDescription>
+                              Если вы забыли пароль, пожалуйста, напишите на tg <a href="https://t.me/pr1mitive">@pr1mitive</a>
+                            </DialogDescription>
+                          </DialogHeader>
+                          {/*
+                          <DialogHeader>
                             <DialogTitle>Забыл пароль</DialogTitle>
                             <DialogDescription>
                               Вам придет письмо на эту почту:
@@ -153,12 +164,11 @@ export default function LoginForm() {
                             </div>
                           </div>
                           <DialogFooter className="sm:justify-start">
-                            {/* <DialogClose asChild> */}
                               <Button type="button" disabled={resetLoading} onClick={x => resetPassword()}>
                                 Отправить
                               </Button>
-                            {/* </DialogClose> */}
                           </DialogFooter>
+                          */}
                         </DialogContent>
                       </Dialog>
                     </div>
