@@ -22,6 +22,17 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { useToast } from "@/hooks/use-toast"
 import { Input } from "@/components/ui/input"
 import Link from "next/link"
 import { signIn } from "next-auth/react";
@@ -41,11 +52,33 @@ const formSchema = z.object({
 })
 
 export default function LoginForm() {
+  const { toast } = useToast()
   const [loading, setLoading] = React.useState(false);
+  const [resetLoading, setResetLoading] = React.useState(false);
+  const [email, setEmail] = React.useState('');
   const router = useRouter()
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   })
+  function resetPassword() {
+    setResetLoading(true)
+    fetch('/api/reset-password?email=' + email).then(x => x.json()).then(json => {
+      setResetLoading(false)
+      console.log(json);
+      if (json.ok) {
+        toast({
+          title: "Письмо отправлено",
+          description: "Проверьте почту",
+        })
+      } else {
+        toast({
+          title: "Ошибка",
+          description: json?.message,
+        })
+      }
+    })
+
+  }
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setLoading(true);
     const res = await signIn("credentials", {
@@ -97,9 +130,37 @@ export default function LoginForm() {
                   <FormLabel>
                     <div className="flex items-center">
                       <Label htmlFor="password">Пароль</Label>
-                      <Link href="#" className="ml-auto inline-block text-sm underline">
-                        Забыли пароль?
-                      </Link>
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <Link href="#" className="ml-auto inline-block text-sm underline">
+                            Забыли пароль?
+                          </Link>
+                        </DialogTrigger>
+                        <DialogContent className="sm:max-w-md">
+                          <DialogHeader>
+                            <DialogTitle>Забыл пароль</DialogTitle>
+                            <DialogDescription>
+                              Вам придет письмо на эту почту:
+                            </DialogDescription>
+                          </DialogHeader>
+                          <div className="flex items-center space-x-2">
+                            <div className="grid flex-1 gap-2">
+                              <Input
+                                id="email-p"
+                                value={form.getValues().email}
+                                onChange={e => setEmail(e.target.value)}
+                              />
+                            </div>
+                          </div>
+                          <DialogFooter className="sm:justify-start">
+                            {/* <DialogClose asChild> */}
+                              <Button type="button" disabled={resetLoading} onClick={x => resetPassword()}>
+                                Отправить
+                              </Button>
+                            {/* </DialogClose> */}
+                          </DialogFooter>
+                        </DialogContent>
+                      </Dialog>
                     </div>
                   </FormLabel>
                   <FormControl>
