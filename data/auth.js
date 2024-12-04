@@ -26,6 +26,7 @@ function makeid() {
 export async function getUser(filter) {
   await connectDB()
   const user = await User.findOneAndUpdate(filter, { last_update: new Date() }, { new: true })
+  if (!user) return null
   await user.save()
   return user
 }
@@ -50,11 +51,11 @@ export async function createUser(credentials, student) {
     sid: student.id,
     token: makeid(),
     email: credentials.email,
-    passhash: hash(credentials.password),
+    passhash: hashP(credentials.password),
     grade_name: grade_name,
     name: student.text,
-    register_time: new Date(),
-    last_update: new Date(),
+    // register_time: new Date(),
+    // last_update: new Date(),
     student: true,
     inits: inits
   })

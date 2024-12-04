@@ -39,7 +39,12 @@ import { useRouter } from 'next/navigation'
 import { PasswordInput } from "@/components/password-input"
 
 function parseError(error: string) {
-  return JSON.parse(error.slice(7))
+  try {
+    return JSON.parse(error.slice(7))
+  } catch (err: any) {
+    return {message: err, field: 'name'}
+  }
+  
 }
 
 const formSchema = z.object({
