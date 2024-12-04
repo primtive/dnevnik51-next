@@ -7,8 +7,8 @@ const userSchema = new mongoose.Schema({
   passhash: String,
   grade_name: String,
   name: String,
-  register_time: Date,
-  last_update: Date,
+  register_time: mongoose.Schema.Types.Mixed,
+  last_update: mongoose.Schema.Types.Mixed,
   student: Boolean,
   inits: String
 })
