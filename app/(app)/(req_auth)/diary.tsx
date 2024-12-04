@@ -46,7 +46,7 @@ export const DiaryComponent = () => {
     <>
       <div className='flex'>
         <WeekSelect onChange={(day: Date) => setDate(day)} />
-        <div className="flex items-center space-x-2 ml-5">
+        <div className="flex items-center space-x-2 ml-2 lg:ml-5">
           <Checkbox id="terms" onCheckedChange={(checked: any) => setShowTopics(checked)} />
           <label htmlFor="terms" className="text-sm font-medium leading-none">
             Темы

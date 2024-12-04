@@ -19,10 +19,10 @@ export const metadata: Metadata = {
   icons: {
     icon: "/favicon.ico"
   },
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "white" },
-    { media: "(prefers-color-scheme: dark)", color: "black" },
-  ],
+  // themeColor: [
+  //   { media: "(prefers-color-scheme: light)", color: "white" },
+  //   { media: "(prefers-color-scheme: dark)", color: "black" },
+  // ],
 };
 
 export default async function RootLayout({

@@ -18,10 +18,11 @@ export async function connectDB() {
     return cached.conn;
   }
   if (!cached.promise) {
-    const opts = {
-      bufferCommands: false,
-    };
-    cached.promise = mongoose.connect(DB_URL, opts).then((mongoose) => {
+    cached.promise = mongoose.connect(DB_URL, {
+      authSource: "admin",
+      user: process.env.MONGODB_USER,
+      pass: process.env.MONGODB_PASSWORD
+    }).then((mongoose) => {
       return mongoose;
     });
   }
@@ -45,8 +46,10 @@ export async function setEduData(data) {
 }
 
 export async function getUser(filter) {
+  console.log('getting user...');
   await connectDB()
-  const user = await User.find(filter)
+  const user = await User.findOneAndUpdate(filter, { last_update: new Date() }, { new: true })
+  await user.save()
   return user
 }
 

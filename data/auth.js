@@ -33,8 +33,6 @@ export async function authWithCredentials(credentials) {
   await connectDB()
   const user = await User.findOne({ email: credentials.email })
 
-  console.log(hashP(credentials.password));
-
   if (!user) return { ok: false, message: 'Пользователь не найден' }
   if (compare(credentials.password, user.passhash)) return { ok: true, message: '', user }
   else return { ok: false, message: 'Неверный пароль', user }

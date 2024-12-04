@@ -83,7 +83,6 @@ class Statistics {
   async loadEduData() {
     var edu_data = await getEduData(this.gid)
     if (edu_data == null) {
-      console.log('parsing edu data...')
       edu_data = await parseEduData(this.gid)
       edu_data = await updateEduData(edu_data)
 
@@ -115,7 +114,6 @@ class Statistics {
       delete data[name].averages
       delete data[name].counts
     }
-    // if (students[0].sid == '8558062b-5912-4617-bb4f-c3e08bdc0eb1') console.log(data, students);
     return data
   }
   getStudentPosition() {
@@ -175,6 +173,5 @@ export async function getStats(sid, gid) {
   const stats = new Statistics(sid, gid)
   await stats.loadEduData();
   const stats_data = stats.getStatistics()
-  console.log(stats_data);
   return stats_data
 }

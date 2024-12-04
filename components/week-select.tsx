@@ -63,7 +63,7 @@ class WeekSelect extends React.Component<WeekSelectProps, WeekSelectState> {
       selectedDays: getWeekDays(getWeekRange(new Date()).from),
     };
   }
-  
+
   setDate = (date: Date) => {
     const old = this.state.selectedDays[0];
     this.setState({
@@ -105,8 +105,10 @@ class WeekSelect extends React.Component<WeekSelectProps, WeekSelectState> {
         <Button variant="outline" className='w-8' onClick={this.prevWeek}><ArrowLeft /></Button>
         <Popover>
           <PopoverTrigger asChild>
-            <Button variant={"outline"} className='w-60'>
-              {format(modifiers.selectedRangeStart, 'd MMM', {locale: ru}).slice(0,-1) + ' - ' + format(modifiers.selectedRangeEnd, 'd MMM', {locale: ru}).slice(0,-1)}
+            <Button variant={"outline"} className='min-w-[180px]'>
+              <p className='leading-none overflow-hidden max-w-[120px] text-ellipsis'>
+                {format(modifiers.selectedRangeStart, 'd MMM', { locale: ru }).slice(0, -1) + ' - ' + format(modifiers.selectedRangeEnd, 'd MMM', { locale: ru }).slice(0, -1)}
+              </p>
               <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
             </Button>
           </PopoverTrigger>
@@ -121,7 +123,7 @@ class WeekSelect extends React.Component<WeekSelectProps, WeekSelectState> {
             />
           </PopoverContent>
         </Popover>
-        <Button variant="outline" className='w-8'  onClick={this.nextWeek}><ArrowRight /></Button>
+        <Button variant="outline" className='w-8' onClick={this.nextWeek}><ArrowRight /></Button>
       </div>
     )
   }
