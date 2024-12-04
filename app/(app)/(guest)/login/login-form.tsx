@@ -55,7 +55,7 @@ const formSchema = z.object({
 export default function LoginForm() {
   const { data: session, status } = useSession()
   const router = useRouter()
-  if (status == 'authenticated') return router.push('/')
+  if (status == 'authenticated') router.push('/')
   const { toast } = useToast()
   const [loading, setLoading] = React.useState(false);
   const [resetLoading, setResetLoading] = React.useState(false);
