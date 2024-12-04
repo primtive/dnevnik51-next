@@ -45,14 +45,6 @@ export async function setEduData(data) {
   }
 }
 
-export async function getUser(filter) {
-  console.log('getting user...');
-  await connectDB()
-  const user = await User.findOneAndUpdate(filter, { last_update: new Date() }, { new: true })
-  await user.save()
-  return user
-}
-
 export async function getGradeNames() {
   await connectDB()
   const gradeNames = await GradeName.find({})

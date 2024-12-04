@@ -80,7 +80,8 @@ export default function RegisterForm({ gradeNames }: { gradeNames: any }) {
         message: error.text,
       })
     } else {
-      router.push(res?.url!)
+      // router.push(res?.url!)
+      window.location.href = res?.url!
     }
   }
 

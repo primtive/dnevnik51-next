@@ -25,7 +25,8 @@ function makeid() {
 
 export async function getUser(filter) {
   await connectDB()
-  const user = await User.findOne(filter)
+  const user = await User.findOneAndUpdate(filter, { last_update: new Date() }, { new: true })
+  await user.save()
   return user
 }
 

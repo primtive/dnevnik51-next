@@ -61,7 +61,8 @@ export default function LoginForm() {
         message: res?.error,
       })
     } else {
-      router.push(res?.url!)
+      // router.push(res?.url!)
+      window.location.href = res?.url!
     }
   }
 
