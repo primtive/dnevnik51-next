@@ -2,6 +2,7 @@ import mongoose from 'mongoose'
 import { connectDB, getGradeNames } from './db'
 import User from './models/user'
 import crypto from 'crypto'
+import { makeid } from './utils'
 
 function hashP(password) {
   return crypto.createHash('md5').update(password).digest("hex")
@@ -11,24 +12,18 @@ function compare(password, hash) {
   return hashP(password) == hash
 }
 
-function makeid() {
-  let result = '';
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  const charactersLength = characters.length;
-  let counter = 0;
-  while (counter < 16) {
-    result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    counter += 1;
-  }
-  return result;
-}
-
 export async function getUser(filter) {
   await connectDB()
   const user = await User.findOneAndUpdate(filter, { last_update: new Date() }, { new: true })
   if (!user) return null
   await user.save()
   return user
+}
+
+export async function resetPassword(email, password) {
+  await connectDB()
+  const user = await User.findOneAndUpdate({email}, { passhash: hashP(password), last_update: new Date() })
+  await user.save()
 }
 
 export async function authWithCredentials(credentials) {

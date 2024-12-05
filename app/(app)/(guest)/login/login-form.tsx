@@ -60,7 +60,7 @@ export default function LoginForm() {
   const [loading, setLoading] = React.useState(false);
   const [resetLoading, setResetLoading] = React.useState(false);
   const [email, setEmail] = React.useState('');
-  
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   })
@@ -68,7 +68,6 @@ export default function LoginForm() {
     setResetLoading(true)
     fetch('/api/reset-password?email=' + email).then(x => x.json()).then(json => {
       setResetLoading(false)
-      console.log(json);
       if (json.ok) {
         toast({
           title: "Письмо отправлено",
@@ -142,13 +141,6 @@ export default function LoginForm() {
                         </DialogTrigger>
                         <DialogContent className="sm:max-w-md">
                           <DialogHeader>
-                            <DialogTitle>Функция пока не работает</DialogTitle>
-                            <DialogDescription>
-                              Если вы забыли пароль, пожалуйста, напишите на tg <a href="https://t.me/pr1mitive">@pr1mitive</a>
-                            </DialogDescription>
-                          </DialogHeader>
-                          {/*
-                          <DialogHeader>
                             <DialogTitle>Забыл пароль</DialogTitle>
                             <DialogDescription>
                               Вам придет письмо на эту почту:
@@ -164,11 +156,10 @@ export default function LoginForm() {
                             </div>
                           </div>
                           <DialogFooter className="sm:justify-start">
-                              <Button type="button" disabled={resetLoading} onClick={x => resetPassword()}>
-                                Отправить
-                              </Button>
+                            <Button type="button" disabled={resetLoading} onClick={x => resetPassword()}>
+                              Отправить
+                            </Button>
                           </DialogFooter>
-                          */}
                         </DialogContent>
                       </Dialog>
                     </div>

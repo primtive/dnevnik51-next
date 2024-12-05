@@ -1,39 +1,44 @@
 import { getUser } from "@/data/auth";
+import { newPassRecovery } from "@/data/db";
+import { makeid } from "@/data/utils";
 import { NextRequest, NextResponse } from "next/server";
-import { SMTPClient } from 'smtp-client';
+import nodemailer from 'nodemailer'
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const email = searchParams.get('email');
+  if (!email) return NextResponse.json({ ok: false, message: 'Укажите почту' })
   if (!getUser({ email })) return NextResponse.json({ ok: false, message: 'Пользователь с такой почтой не найден' })
 
-  let s = new SMTPClient({
-    host: 'smtp.mail.ru',
-    port: 465,
-  });
-  await s.connect();
-  await s.authLogin({
-    username: 'no-reply@dnevnik51.ru',
-    password: 'W542bX2WwZFqeN8s7vhD'
+  const recovery_id = makeid()
+  const recovery_link = 'https://dnevnik51.ru/reset-password/' + recovery_id
+
+  await newPassRecovery({
+    email,
+    id: recovery_id,
+    active: true
   })
-  const recovery_link = 'sadrsadrsdr'
-  const message = {
-    from: 'no-reply@dnevnik51.ru',
+
+  const transporter = nodemailer.createTransport({
+    host: "smtp.mail.ru",
+    port: 465,
+    secure: true,
+    auth: {
+      user: process.env.MAIL_EMAIL,
+      pass: process.env.MAIL_PASSWORD
+    }
+  })
+
+  const mailOptions = {
+    from: process.env.MAIL_EMAIL,
     to: email,
     subject: 'Восстановление пароля dnevnik51.ru',
     text: `Привет!
-           Кто-то активировал процедуру сброса пароля для твоего аккаунта на dnevnik51.ru
-           Изменить пароль можно, перейдя по ссылке: ${recovery_link}
-
-           Если ты не запрашивал(а) сброс пароля, то просто проигнорируй это письмо.
-           Твой пароль не будет изменён до тех пор, пока ты не перейдёшь по указанной выше ссылке.
+  Кто-то активировал процедуру сброса пароля для твоего аккаунта на dnevnik51
+  Изменить пароль можно, перейдя по ссылке: ${recovery_link}
     `
   }
-
-  await s.mail({ from: 'no-reply@dnevnik51.ru' });
-  await s.rcpt({ to: email! });
-  await s.data(`Subject: title\r\nbody`);
-  await s.quit();
+  transporter.sendMail(mailOptions);
 
   return NextResponse.json({ ok: true })
 }
