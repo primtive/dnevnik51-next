@@ -88,8 +88,10 @@ class Statistics {
 
       await setEduData(edu_data)
     }
-    if (edu_data.expired - getTimestamp() > 604800) {
+    if (getTimestamp() - edu_data.last_update > 604800) {
       this.edu_data = await updateEduData(edu_data)
+      this.edu_data.last_update = getTimestamp()
+      await setEduData(edu_data)
     } else {
       this.edu_data = edu_data
     }

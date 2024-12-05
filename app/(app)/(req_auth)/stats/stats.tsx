@@ -54,7 +54,7 @@ export async function StatsComponent() {
       <Card>
         <CardHeader>
           <CardTitle>
-            Последнее обновление: {last_update.format('D MMM').slice(0, -1)}, {last_update.startOf('hour').fromNow()}
+            Последнее обновление: {last_update.format('D MMM').slice(0, -1)}, {last_update.fromNow()}
           </CardTitle>
         </CardHeader>
       </Card>
