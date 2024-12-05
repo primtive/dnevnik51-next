@@ -150,7 +150,7 @@ export default function LoginForm() {
                             <div className="grid flex-1 gap-2">
                               <Input
                                 id="email-p"
-                                value={form.getValues().email}
+                                defaultValue={form.getValues().email}
                                 onChange={e => setEmail(e.target.value)}
                               />
                             </div>
