@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import EduData from "./models/edu_data"
 import GradeName from "./models/grade_name"
 import PassRecovery from "./models/pass_recovery"
+import Request from "./models/request"
 
 const DB_URL = process.env.MONGODB_URL
 
@@ -67,4 +68,14 @@ export async function updatePassRecovery(id, update) {
   await connectDB()
   const pass_recovery = await PassRecovery.findOneAndUpdate({id}, update);
   await pass_recovery.save()
+}
+
+export async function logRequest(sid, path) {
+  await connectDB()
+  const request = new Request({
+    sid,
+    time: new Date(),
+    path
+  })
+  await request.save()
 }

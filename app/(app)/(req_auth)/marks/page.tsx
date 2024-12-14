@@ -1,11 +1,16 @@
 import * as React from 'react';
 import { MarksComponent } from './marks';
+import { logRequest } from '@/data/db';
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/auth"
 
 export const metadata = {
   title: 'Оценки',
 };
 
 export default async function Marks() {
+  const session = await getServerSession(authOptions)
+  logRequest(session?.user.sid, 'marks')
   const now: Date = new Date();
   const start: Date = new Date(now.getFullYear(), 0, 0);
   var day = Math.floor((now.valueOf() - start.valueOf()) / (1000 * 60 * 60 * 24));
