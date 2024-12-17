@@ -58,8 +58,8 @@ export const DiaryComponent = () => {
           [...Array(5).keys()].map(x => <Skeleton key={x} className='w-[400px] h-[50px]' />)
           :
           diary.map((day: any) =>
-            <Card key={day.name} className='min-w-[400px] max-w-[1000px]'>
-              <CardHeader>
+            <Card key={day.name} className='min-w-[380px] max-w-[1000px]'>
+              <CardHeader className='pb-3 md:pb-0'>
                 <CardTitle>
                   <div className='flex'>
                     <p>{day.name}</p>
@@ -67,7 +67,7 @@ export const DiaryComponent = () => {
                   </div>
                 </CardTitle>
               </CardHeader>
-              <CardContent>
+              <CardContent className='p-2 md:p-3'>
                 <Table>
                   <TableBody>
                     {day.lessons.map((lesson: any) => (

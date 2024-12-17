@@ -87,12 +87,12 @@ export const MarksComponent = ({ initPeriod }: { initPeriod: string }) => {
           </SelectContent>
         </Select>
       </div>
-      <Card className="">
-        <CardHeader>
+      <Card>
+        <CardHeader className='pb-3 md:pb-0'>
           <CardTitle>Оценки</CardTitle>
           {/* <CardDescription>Сформированная</CardDescription> */}
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-0 md:p-3">
           {isLoading ?
             <Skeleton className='w-[100px] h-[20px]' /> :
             marks!.mode == 'pm' ?
