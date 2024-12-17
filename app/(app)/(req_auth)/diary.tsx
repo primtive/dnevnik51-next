@@ -79,8 +79,8 @@ export const DiaryComponent = () => {
                               <p className='text-xs text-muted-foreground'>{lesson.time}</p>
                             </div>
                             {showTopics && <p className='text-xs text-muted-foreground'>{lesson.topic}</p>}
-                            <p className='mt-1' dangerouslySetInnerHTML={{ __html: lesson.homework.length > 200 ? '<details><summary>Развернуть</summary>' + lesson.homework + '</details>' : lesson.homework }} />
-                            <p className='italic'>{lesson.note}</p>
+                            {lesson.homework && <p className='mt-1' dangerouslySetInnerHTML={{ __html: lesson.homework.length > 200 ? '<details><summary>Развернуть</summary>' + lesson.homework + '</details>' : lesson.homework }} />}
+                            {lesson.note && <p className='italic'>{lesson.note}</p>}
                           </div>
                         </TableCell>
                         <TableCell className='text-right w-[50px]'>{lesson.mark && <Mark mark={lesson.mark} className='mr-0 ml-auto' />} {lesson.absence && 'н'}</TableCell>
