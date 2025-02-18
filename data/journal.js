@@ -14,10 +14,10 @@ const call_shedule = [
 const periods = {
   'q1': ['01.09', '28.10'],  // first
   'q2': ['07.11', '30.12'],  // second
-  'q3': ['10.01', '24.03'],  // third
+  'q3': ['01.01', '24.03'],  // third
   'q4': ['04.04', '31.05'],  // fourth
   'h1': ['01.09', '30.12'],  // first half
-  'h2': ['10.01', '31.05'],  // second half
+  'h2': ['01.01', '31.05'],  // second half
   'year': ['01.09', '31.05'] // year
 }
 
@@ -164,7 +164,7 @@ export async function getDiary(sid, date) {
             topic: lesson.topic,
             number: parseInt(lesson.lessonNumber),
             time: call_shedule[parseInt(lesson.lessonNumber) - 1],
-            homework: lesson.previousHomework?.homework.replace(linkRegex, (match) => `<a class='text-link' href='${match}' key={i}> ${(new URL(match)).hostname} </a>`),
+            homework: lesson.previousHomework?.homework.replace(linkRegex, (match) => `<a class='text-link' target="_blank" href='${match}' key={i}> ${(new URL(match)).hostname} </a>`),
             note: updateNoteNames(lesson.notes[0]),
             absence: checkAbsence(lesson.absenceRaw[0]),
             mark: lesson.marksRaw[0]

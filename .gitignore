@@ -20,12 +20,6 @@
 # production
 /build
 
-# misc
-/config/config.js
-nginx.conf
-.DS_Store
-*.pem
-
 # debug
 npm-debug.log*
 yarn-debug.log*
@@ -40,3 +34,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# misc
+/config/config.js
+nginx.conf
+.DS_Store
+*.pem
+nginx v2.conf
