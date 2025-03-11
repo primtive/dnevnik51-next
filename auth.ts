@@ -28,7 +28,7 @@ export const authOptions: NextAuthOptions = {
             if (credentials.sign_up) {
               if (await getUser({ email: credentials.email })) throw new Error(JSON.stringify({ field: 'email', text: 'Пользователь с такой почтой уже зарегистрирован' }));
               const student = await getStudentByName(credentials.grade, credentials.name)
-              if (await getUser({ gid: credentials.grade, name: student.text })) throw new Error(JSON.stringify({ field: 'name', text: 'Такой ученик уже зарегистрирован' }));
+              if (await getUser({ gid: credentials.grade, name: student?.text })) throw new Error(JSON.stringify({ field: 'name', text: 'Такой ученик уже зарегистрирован' }));
               if (student) {
                 return await createUser(credentials, student)
               } else {
