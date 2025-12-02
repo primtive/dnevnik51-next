@@ -36,7 +36,6 @@ export const DiaryComponent = () => {
     fetch('/api/edu/diary?date=' + moment(date).format('DD.MM.YYYY'))
       .then((res) => res.json())
       .then((json) => {
-        console.log(json)
         setDiary(json.data)
         setLoading(false)
       })

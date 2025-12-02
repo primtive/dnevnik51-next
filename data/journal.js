@@ -1,6 +1,4 @@
-import headers from "@/config/config"
 import { parse } from 'node-html-parser';
-import moment from "moment";
 
 const call_shedule = [
   '8:30 - 9:10',
@@ -41,10 +39,16 @@ const subject_names = [
   ['Труд (технология)', 'Технология'],
   ['Основы духовно-нравственной культуры народов России', 'ОДНКНР'],
   ['Элективный курс по математике Математика вокруг нас', 'ЭК Математика'],
-  ['Элективный курс по обществознанию Актуальные вопросы обществознания', 'ЭК Обществознание']
+  ['Элективный курс по обществознанию Актуальные вопросы обществознания', 'ЭК Обществознание'],
+  ['Элективный курс по физике Методы решения физических задач', 'ЭК физика'],
+  ['Элективный курс по информатике Практикум по информатике', 'ЭК информатика']
 ]
 
 const linkRegex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/g
+
+function getHeaders() {
+  return { Cookie: process.env.COOKIE, 'User-Agent': "Mozilla/5.0 (X11; Linux x86_64; rv:144.0) Gecko/20100101 Firefox/144.0" }
+}
 
 function updateSubjectNames(text) {
   subject_names.forEach(name => {
@@ -77,8 +81,17 @@ function get_edu_year(date) {
   }
 }
 
+export async function getStudentFromGrade(gid) {
+  const res = await fetch('https://de.edu.orb.ru/er/index/lookup/PARTICIPANTFK?parent=' + gid, { headers: getHeaders() })
+  if (res.ok) {
+    const json = await res.json()
+    return json.data
+  }
+  return null
+}
+
 export async function getStudentByName(gid, name) {
-  const res = await fetch('https://de.edu.orb.ru/er/index/lookup/PARTICIPANTFK?parent=' + gid, { headers: headers })
+  const res = await fetch('https://de.edu.orb.ru/er/index/lookup/PARTICIPANTFK?parent=' + gid, { headers: getHeaders() })
   if (res.ok) {
     const json = await res.json()
     return json.data.find(x => x.text.includes(name))
@@ -98,7 +111,7 @@ export async function getMarks(sid, gid, period) {
   ].join('&');
   const res = await fetch('https://de.edu.orb.ru/er/index/report/report/progress/participant_marks?' + query,
     {
-      headers: headers
+      headers: getHeaders()
     }
   )
   return res.text().then((x => {
@@ -128,7 +141,7 @@ export async function getFinalMarks(sid, gid) {
   ].join('&');
   const res = await fetch('https://de.edu.orb.ru/er/index/report/report/progress/participant_period_marks?' + query,
     {
-      headers: headers
+      headers: getHeaders()
     }
   )
   return res.text().then((x => {
@@ -152,7 +165,7 @@ export async function getFinalMarks(sid, gid) {
 }
 
 export async function getDiary(sid, date) {
-  const res = await fetch('https://de.edu.orb.ru/edv/index/diary/' + sid + '?date=' + date, { headers: headers })
+  const res = await fetch('https://de.edu.orb.ru/edv/index/diary/' + sid + '?date=' + date, { headers: getHeaders() })
   return res.json().then((json => {
     return Object.entries(json.data.diary).map(([name, day]) => {
       return {

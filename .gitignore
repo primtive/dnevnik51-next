@@ -36,8 +36,8 @@ yarn-error.log*
 next-env.d.ts
 
 # misc
-/config/config.js
-nginx.conf
 .DS_Store
 *.pem
-nginx v2.conf
+/dump
+mongo-keyfile
+docker-compose.yml

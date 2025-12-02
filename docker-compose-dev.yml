@@ -1,0 +1,44 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./:/app
+    environment:
+      - AUTH_SECRET=123
+      - MONGODB_URL=mongodb://mongo:27017/dnevnik51?authSource=admin&tls=false&directConnection=true
+      - MONGODB_USER=admin
+      - MONGODB_PASSWORD=12345678
+      - COOKIE=
+      - VERCEL="0"
+    ports:
+      - 80:3000
+    networks:
+      - proxy_network
+  mongo:
+    image: mongo:4.4.6
+    command: >
+      mongod --replSet rs0
+             --bind_ip_all
+             --auth
+             --keyFile /etc/secrets/keyfile
+    ports:
+      - 27017:27017
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=12345678
+    volumes:
+      - mongo_data:/data/db
+      - mongo_config:/data/configdb
+      - ./mongo-keyfile:/etc/secrets/keyfile:ro
+    networks:
+      - proxy_network
+
+volumes:
+  mongo_data:
+  mongo_config:
+
+networks:
+  proxy_network:
+    driver: bridge

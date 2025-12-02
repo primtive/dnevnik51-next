@@ -4,7 +4,7 @@ import GradeName from "./models/grade_name"
 import PassRecovery from "./models/pass_recovery"
 import Request from "./models/request"
 
-const DB_URL = process.env.MONGODB_URL
+const DB_URL = process.env.MONGODB_URL || 'mongodb://mongo:27017/dnevnik51?authSource=admin&tls=false&directConnection=true';
 
 if (!DB_URL) throw new Error('no MONGODB_URL in .env')
 
@@ -21,8 +21,8 @@ export async function connectDB() {
   if (!cached.promise) {
     cached.promise = mongoose.connect(DB_URL, {
       authSource: "admin",
-      user: process.env.MONGODB_USER,
-      pass: process.env.MONGODB_PASSWORD
+      user: process.env.MONGODB_USER || '',
+      pass: process.env.MONGODB_PASSWORD || ''
     }).then((mongoose) => {
       return mongoose;
     });

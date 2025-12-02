@@ -133,7 +133,7 @@ export default function LoginForm() {
                   <FormLabel>
                     <div className="flex items-center">
                       <Label htmlFor="password">Пароль</Label>
-                      <Dialog>
+                      {/* <Dialog>
                         <DialogTrigger asChild>
                           <Link href="#" className="ml-auto inline-block text-sm underline">
                             Забыли пароль?
@@ -160,7 +160,7 @@ export default function LoginForm() {
                             </Button>
                           </DialogFooter>
                         </DialogContent>
-                      </Dialog>
+                      </Dialog> */}
                     </div>
                   </FormLabel>
                   <FormControl>
